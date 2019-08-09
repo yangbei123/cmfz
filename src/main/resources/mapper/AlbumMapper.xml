@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.AlbumDao">
+    <select id="selectAlbums" resultType="Album">
+        select id,title,author,score,cover_img,broadcast,count,content,pub_date
+        from album limit #{start},#{rows}
+    </select>
+    <select id="albumsCount" resultType="Integer">
+        select count(id) from album
+    </select>
+    <update id="updateCount">
+        update album set count=count+1 where id=#{id}
+    </update>
+    <insert id="addAlbum">
+        insert into album
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null and id!=''">
+                id,
+            </if>
+            <if test="title!=null and title!=''">
+                title,
+            </if>
+            <if test="author!=null and author!=''">
+                author,
+            </if>
+            <if test="score!=null and score!=''">
+                score,
+            </if>
+            <if test="cover_img!=null and cover_img!=''">
+                cover_img,
+            </if>
+            <if test="broadcast!=null and broadcast!=''">
+                broadcast,
+            </if>
+            <if test="count!=null and count!=''">
+                count,
+            </if>
+            <if test="content!=null and content!=''">
+                content,
+            </if>
+            <if test="pub_date!=null">
+                pub_date
+            </if>
+        </trim>
+
+        values
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null and id!=''">
+                #{id},
+            </if>
+            <if test="title!=null and title!=''">
+                #{title},
+            </if>
+            <if test="author!=null and author!=''">
+                #{author},
+            </if>
+            <if test="score!=null and score!=''">
+                #{score},
+            </if>
+            <if test="cover_img!=null and cover_img!=''">
+                #{cover_img},
+            </if>
+            <if test="broadcast!=null and broadcast!=''">
+                #{broadcast},
+            </if>
+            <if test="count!=null and count!=''">
+                #{count},
+            </if>
+            <if test="content!=null and content!=''">
+                #{content},
+            </if>
+            <if test="pub_date!=null">
+                #{pub_date}
+            </if>
+        </trim>
+
+    </insert>
+    <update id="updateAlbum">
+        update album
+        <set>
+            <if test="id!=null and id!=''">
+                id=#{id},
+            </if>
+            <if test="title!=null and title!=''">
+                title=#{title},
+            </if>
+            <if test="author!=null and author!=''">
+                author=#{author},
+            </if>
+            <if test="score!=null and score!=''">
+                score=#{score},
+            </if>
+            <if test="cover_img!=null and cover_img!=''">
+                cover_img=#{cover_img},
+            </if>
+            <if test="broadcast!=null and broadcast!=''">
+                broadcast=#{broadcast},
+            </if>
+            <if test="count!=null and count!=''">
+                count=#{count},
+            </if>
+            <if test="content!=null and content!=''">
+                content=#{content},
+            </if>
+            <if test="pub_date!=null">
+                pub_date=#{pub_date},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delAlbum">
+        delete from album where id=#{id}
+    </delete>
+</mapper>

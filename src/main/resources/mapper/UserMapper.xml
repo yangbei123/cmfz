@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.UserDao">
+    <select id="selectUsers" resultType="User">
+        select id,phone,password,salt,pic_img,ahama,name,sex,city,
+               sign,status,reg_date,guruId
+        from user limit #{start},#{rows}
+    </select>
+    <select id="countUser" resultType="Integer">
+        select count(id) from user
+    </select>
+    <update id="updateUser" parameterType="User">
+        update user
+        <set>
+            <if test="phone!=null">
+                phone=#{phone},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="salt!=null">
+                salt=#{salt},
+            </if>
+            <if test="pic_img!=null and pic_img!=''">
+                pic_img=#{pic_img},
+            </if>
+            <if test="ahama!=null">
+                ahama=#{ahama},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="sex!=null">
+                sex=#{sex},
+            </if>
+            <if test="city!=null">
+                city=#{city},
+            </if>
+            <if test="sign!=null">
+                sign=#{sign},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="reg_date!=null">
+                reg_date=#{reg_date},
+            </if>
+            <if test="guruId!=null">
+                guruId=#{guruId}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <select id="selectAllUsers" resultType="User">
+        select id,phone,password,salt,pic_img,ahama,name,sex,city,
+               sign,status,reg_date,guruId
+        from user
+    </select>
+
+
+    <select id="selectBoysByMonth" resultType="Integer">
+        /*select  count(*) count from user where sex = '男' GROUP BY  DATE_FORMAT(reg_date,'%m')*/
+        select u.count from month m left join (select  DATE_FORMAT(reg_date,'%m') month,count(*) count from user where sex = '男' GROUP BY  DATE_FORMAT(reg_date,'%m') )u
+on m.month=u.month
+    </select>
+    <select id="selectGirlsByMonth" resultType="Integer">
+        /*select  count(*) count from user where sex = '女' GROUP BY  DATE_FORMAT(reg_date,'%m')*/
+        select u.count from month m left join (select  DATE_FORMAT(reg_date,'%m') month,count(*) count from user where sex = '女' GROUP BY  DATE_FORMAT(reg_date,'%m') )u
+on m.month=u.month
+    </select>
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.ArticleDao">
+    <select id="selectArticles" resultType="Article">
+        select id,title,status,insert_img,content,up_date,guruId
+        from article limit #{start},#{rows}
+    </select>
+    <select id="countArticle" resultType="Integer">
+        select count(id) from article
+    </select>
+    <delete id="delArticle">
+        delete from article where id=#{id}
+    </delete>
+    <update id="updateArticle">
+        update article
+        <set>
+            <if test="title!=null and title!=''">
+                title=#{title},
+            </if>
+            <if test="status!=null and status!=''">
+                status=#{status},
+            </if>
+            <if test="insert_img!=null and insert_img!=''">
+                insert_img=#{insert_img},
+            </if>
+            <if test="content!=null and content!=''">
+                content=#{content},
+            </if>
+            <if test="up_date!=null">
+                up_date=#{up_date},
+            </if>
+            <if test="guruId!=null and guruId!=''">
+                guruId=#{guruId},
+            </if>
+        </set>
+        where id=#{id}
+
+    </update>
+    <insert id="addArticle">
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null and id!=''">
+                id,
+            </if>
+            <if test="title!=null and title!=''">
+                title,
+            </if>
+            <if test="status!=null and status!=''">
+                status,
+            </if>
+            <if test="insert_img!=null and insert_img!=''">
+                insert_img,
+            </if>
+            <if test="content!=null and content!=''">
+                content,
+            </if>
+            <if test="up_date!=null">
+                up_date,
+            </if>
+            <if test="guruId!=null and guruId!=''">
+                guruId
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null and id!=''">
+                #{id},
+            </if>
+            <if test="title!=null and title!=''">
+                #{title},
+            </if>
+            <if test="status!=null and status!=''">
+                #{status},
+            </if>
+            <if test="insert_img!=null and insert_img!=''">
+                #{insert_img},
+            </if>
+            <if test="content!=null and content!=''">
+                #{content},
+            </if>
+            <if test="up_date!=null">
+                #{up_date},
+            </if>
+            <if test="guruId!=null and guruId!=''">
+                #{guruId},
+            </if>
+        </trim>
+
+    </insert>
+
+</mapper>
